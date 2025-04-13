@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script> 
+    
+// to check if a number is even or odd 
+let num = prompt("To check if number is even or Odd,Enter a number:");
+if (num % 2 === 0) {
+  alert("Even");
+} else {
+  alert("Odd");
+}
+
+//Sum of Numbers from 1 to N
+let n = prompt("to find Sum of Numbers from 1 to N , Enter a number:");
+let sum = 0;
+
+for (let i = 1; i <= n; i++) {
+  sum += i;
+}
+
+alert("Sum from 1 to " + n + " is " + sum);
+
+
+// Print Multiplication Table
+let numm = prompt("Enter a number:");
+for (let i = 1; i <= 10; i++) {
+  console.log(numm + " x " + i + " = " + (numm * i));
+}
+
+
+//Compare Two Numbers
+let a = prompt("Enter first number:");
+let b = prompt("Enter second number:");
+if (a > b) {
+  alert(a + " is larger");
+} else if (b > a) {
+  alert(b + " is larger");
+} else {
+  alert("Both are equal");
+}
+
+
+
+    </script>
+</head>
+<body>
+    <button onclick="sayHello()">Click me</button>
+</body>
+</html>
