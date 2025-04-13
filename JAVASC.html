@@ -8,12 +8,14 @@
     <script> 
     
 // to check if a number is even or odd 
-let num = prompt("To check if number is even or Odd,Enter a number:");
-if (num % 2 === 0) {
-  alert("Even");
-} else {
-  alert("Odd");
-}
+const checkEvenOrOdd = () => {
+      let num = prompt("Enter a number to check if it's even or odd:");
+      if (num % 2 === 0) {
+        alert("Even");
+      } else {
+        alert("Odd");
+      }
+    };
 
 //Sum of Numbers from 1 to N
 let n = prompt("to find Sum of Numbers from 1 to N , Enter a number:");
@@ -25,13 +27,11 @@ for (let i = 1; i <= n; i++) {
 
 alert("Sum from 1 to " + n + " is " + sum);
 
-
 // Print Multiplication Table
 let numm = prompt("Enter a number:");
 for (let i = 1; i <= 10; i++) {
   console.log(numm + " x " + i + " = " + (numm * i));
 }
-
 
 //Compare Two Numbers
 let a = prompt("Enter first number:");
@@ -43,8 +43,6 @@ if (a > b) {
 } else {
   alert("Both are equal");
 }
-
-
 
     </script>
 </head>
