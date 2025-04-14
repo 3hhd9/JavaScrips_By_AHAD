@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fun JS Tasks</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    button { margin: 5px; padding: 10px 15px; font-size: 16px; }
+    #output { margin-top: 20px; white-space: pre-line; }
+  </style>
+</head>
+<body>
+
+  <h1>JavaScript Practice Tasks</h1>
+
+  
+  <button onclick="checkEvenOdd()">Even or Odd</button>
+  <button onclick="sumToNUM()">Sum 1 to N</button>
+  <button onclick="runFizzBuzz()">FizzBuzz</button>
+  <button onclick="findLargest()">Find Largest Number</button>
+  <button onclick="countVowels()">Count Vowels</button>
+
+  <div id="output"></div>
+
+  <script>
+    const output = document.getElementById("output");
+
+
+    function checkEvenOdd() {
+      const num = parseInt(prompt("Enter a number:"));
+      const result = (num % 2 === 0) ? `${num} is Even` : `${num} is Odd`;
+      output.textContent = result;
+    }
+
+    function sumToNUM() {
+  const n = parseInt(prompt("Enter a number (N):"));
+  const sum = Array.from({ length: n }, (_, i) => i + 1).reduce((a, b) => a + b, 0);
+  output.textContent = `Sum from 1 to ${n} = ${sum}`;
+}
+
+    function runFizzBuzz() {
+      let result = "";
+      Array.from({ length: 100 }, (_, i) => i + 1).forEach(num => {
+        if (num % 3 === 0 && num % 5 === 0) result += `${num} = FizzBuzz\n`;
+        else if (num % 3 === 0) result += `${num} = Fizz\n`;
+        else if (num % 5 === 0) result += `${num} = Buzz\n`;
+        else result += `${num}\n`;
+      });
+      output.textContent = result;
+    }
+    function findLargest() {
+      const input = prompt("Enter numbers separated by commas (e.g., 5,3,9,1):");
+      const numbers = input.split(",").map(num => parseFloat(num.trim()));
+      const largest = Math.max(...numbers);
+      output.textContent = `Largest number is: ${largest}`;
+    }
+
+    function countVowels() {
+      const text = prompt("Enter a string:");
+      const vowels = ['a', 'e', 'i', 'o', 'u'];
+      const count = Array.from(text.toLowerCase()).filter(char => vowels.includes(char)).length;
+      output.textContent = `Number of vowels: ${count}`;
+    }
+  </script>
+
+</body>
+</html>
