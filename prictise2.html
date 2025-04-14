@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array and String Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 30px;
+        }
+        .results p {
+            background: #f1f1f1;
+            padding: 12px;
+            border-left: 5px solid #4CAF50;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .results strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+
+    <script>
+        function reverseArray(array) {
+            return array.reverse();
+        }
+
+        function filterPositiveNumbers(array) {
+            return array.filter(num => num > 0);
+        }
+
+        function sumOfArrayElements(array) {
+            return array.reduce((sum, num) => sum + num, 0);
+        }
+
+        function countWordOccurrences(text) {
+            const words = text.toLowerCase().match(/\b\w+\b/g);
+            const wordCount = {};
+            words.forEach(word => {
+                wordCount[word] = (wordCount[word] || 0) + 1;
+            });
+            return wordCount;
+        }
+
+        function runExamples() {
+            const arrayInput = document.getElementById("arrayInput").value;
+            const textInput = document.getElementById("textInput").value;
+
+            const array = arrayInput.split(",").map(Number);
+
+            document.getElementById("reversedArray").textContent = reverseArray([...array]);
+            document.getElementById("positiveNumbers").textContent = filterPositiveNumbers(array);
+            document.getElementById("sumArray").textContent = sumOfArrayElements(array);
+            document.getElementById("wordOccurrences").textContent = JSON.stringify(countWordOccurrences(textInput), null, 2);
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Array and String Operations</h1>
+
+    <div class="container">
+        <div class="form-group">
+            <label for="arrayInput">Enter an array (comma-separated):</label>
+            <input type="text" id="arrayInput" placeholder="e.g., 1, 2, 3, 4, 5">
+        </div>
+        <div class="form-group">
+            <label for="textInput">Enter a text:</label>
+            <textarea id="textInput" placeholder="Enter some text here..."></textarea>
+        </div>
+        <button onclick="runExamples()">Run Examples</button>
+
+        <div class="results">
+            <p><strong>Reversed Array:</strong> <span id="reversedArray"></span></p>
+            <p><strong>Positive Numbers:</strong> <span id="positiveNumbers"></span></p>
+            <p><strong>Sum of Array Elements:</strong> <span id="sumArray"></span></p>
+            <p><strong>Word Occurrences:</strong> <span id="wordOccurrences"></span></p>
+        </div>
+    </div>
+
+</body>
+</html>
