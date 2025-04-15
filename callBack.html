@@ -18,9 +18,8 @@
         }
 
         // Task 2: Math Operation Callback
-        function calculate(a, b, operation,callback) {
+        function calculate(a, b, operation, callback) {
             return operation(a, b);
-            callback
         }
 
         function handleCalculate() {
@@ -48,24 +47,100 @@
         }
 
         function handleProcessArray() {
-        const arrayInput = document.getElementById("arrayInput").value;
-        const operation = document.getElementById("arrayOperation").value;
+            const arrayInput = document.getElementById("arrayInput").value;
+            const operation = document.getElementById("arrayOperation").value;
 
-        let array;
-        let processedArray;
+            let array;
+            let processedArray;
 
-        if (operation === "double") {
-            array = arrayInput.split(",").map(Number); // Convert input to numbers
-            processedArray = processArray(array, (n) => n * 2); // Double numbers
-        } else if (operation === "uppercase") {
-            array = arrayInput.split(","); // Treat input as strings
-            processedArray = processArray(array, (str) => str.trim().toUpperCase()); // Convert to uppercase
+            if (operation === "double") {
+                array = arrayInput.split(",").map(Number);
+                if (array.some(isNaN)) {
+                    document.getElementById("arrayResult").textContent = "Error: Please enter valid numbers.";
+                    return;
+                }
+                processedArray = processArray(array, (n) => n * 2);
+            } else if (operation === "uppercase") {
+                array = arrayInput.split(",");
+                processedArray = processArray(array, (str) => str.trim().toUpperCase());
+            }
+
+            document.getElementById("arrayResult").textContent = `Processed Array: ${processedArray}`;
         }
 
-        document.getElementById("arrayResult").textContent = `Processed Array: ${processedArray}`;
-    }
+        // Task 4: Simulate API Call (Async)
+        function getData(callback) {
+            setTimeout(() => {
+                const mockData = { id: 1, name: "John Doe" };
+                callback(mockData);
+            }, 1000);
+        }
 
-       
+        function handleGetData() {
+            getData((data) => {
+                console.log("Received:", data);
+                document.getElementById("apiResult").textContent = `Received: ${JSON.stringify(data)}`;
+            });
+        }
+
+        // Task 5: Nested Callbacks
+        function login(username, callback) {
+            setTimeout(() => {
+                console.log(`Logged in as ${username}`);
+                callback(username);
+            }, 1000);
+        }
+
+        function fetchUser(username, callback) {
+            setTimeout(() => {
+                const user = { username, id: 123 };
+                console.log(`Fetched user data for ${username}`);
+                callback(user);
+            }, 1000);
+        }
+
+        function fetchSettings(user, callback) {
+            setTimeout(() => {
+                const settings = { theme: "dark", language: "en" };
+                console.log(`Fetched settings for ${user.username}`);
+                callback(settings);
+            }, 1000);
+        }
+
+        function runNestedCallbacks() {
+            login("Alice", (username) => {
+                fetchUser(username, (user) => {
+                    fetchSettings(user, (settings) => {
+                        console.log("Final Settings:", settings);
+                    });
+                });
+            });
+        }
+
+        // Task 6: Error Handling
+        function divide(a, b, successCallback, errorCallback) {
+            if (isNaN(a) || isNaN(b)) {
+                errorCallback("Error: Both inputs must be valid numbers.");
+            } else if (b === 0) {
+                errorCallback("Error: Cannot divide by zero.");
+            } else {
+                successCallback(a / b);
+            }
+        }
+
+        function handleDivide() {
+            const a = parseFloat(document.getElementById("divNum1").value);
+            const b = parseFloat(document.getElementById("divNum2").value);
+
+            divide(a, b,
+                (result) => {
+                    document.getElementById("divResult").textContent = `Result: ${result}`;
+                },
+                (error) => {
+                    document.getElementById("divResult").textContent = error;
+                }
+            );
+        }
     </script>
 </head>
 <body>
@@ -99,14 +174,36 @@
         <h2>Task 3: Process Array</h2>
         <input type="text" id="arrayInput" placeholder="Enter array (comma-separated)">
         <select id="arrayOperation">
-            <option value="double">Double Number</option>
-            <option value="square"> Convert to Uppercase </option>
+            <option value="double">Double Numbers</option>
+            <option value="uppercase">Convert to Uppercase</option>
         </select>
         <button onclick="handleProcessArray()">Process Array</button>
         <p id="arrayResult"></p>
-
     </div>
 
-   
+    <!-- Task 4: Simulate API Call -->
+    <div>
+        <h2>Task 4: Simulate API Call</h2>
+        <button onclick="handleGetData()">Get Data</button>
+        <label>Output:</label>
+        <p id="apiResult"></p>
+    </div>
+
+    <!-- Task 5: Nested Callbacks -->
+    <div>
+        <h2>Task 5: Nested Callbacks</h2>
+        <button onclick="runNestedCallbacks()">Run Nested Callbacks</button>
+        <p>Check console for steps.</p>
+    </div>
+
+    <!-- Task 6: Error Handling -->
+    <div>
+        <h2>Task 6: Error Handling (Divide)</h2>
+        <input type="number" id="divNum1" placeholder="Enter numerator">
+        <input type="number" id="divNum2" placeholder="Enter denominator">
+        <button onclick="handleDivide()">Divide</button>
+        <label>Output:</label>
+        <p id="divResult"></p>
+    </div>
 </body>
 </html>
