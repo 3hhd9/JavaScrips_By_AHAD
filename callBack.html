@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback Examples</title>
+    <script>
+        // Task 1: Greeting with Callback
+        function greet(name, callback) {
+            callback(name);
+        }
+
+        function handleGreet() {
+            const name = document.getElementById("greetInput").value;
+            greet(name, (name) => {
+                document.getElementById("greetResult").textContent = `Hello, ${name}!`;
+            });
+        }
+
+        // Task 2: Math Operation Callback
+        function calculate(a, b, operation,callback) {
+            return operation(a, b);
+            callback
+        }
+
+        function handleCalculate() {
+            const a = parseFloat(document.getElementById("num1").value);
+            const b = parseFloat(document.getElementById("num2").value);
+            const operation = document.getElementById("operation").value;
+
+            let result;
+            if (operation === "add") {
+                result = calculate(a, b, (x, y) => x + y);
+            } else if (operation === "subtract") {
+                result = calculate(a, b, (x, y) => x - y);
+            } else if (operation === "multiply") {
+                result = calculate(a, b, (x, y) => x * y);
+            } else if (operation === "divide") {
+                result = calculate(a, b, (x, y) => x / y);
+            }
+
+            document.getElementById("calcResult").textContent = `Result: ${result}`;
+        }
+
+        // Task 3: Process Array Elements
+        function processArray(arr, callback) {
+            return arr.map(callback);
+        }
+
+        function handleProcessArray() {
+        const arrayInput = document.getElementById("arrayInput").value;
+        const operation = document.getElementById("arrayOperation").value;
+
+        let array;
+        let processedArray;
+
+        if (operation === "double") {
+            array = arrayInput.split(",").map(Number); // Convert input to numbers
+            processedArray = processArray(array, (n) => n * 2); // Double numbers
+        } else if (operation === "uppercase") {
+            array = arrayInput.split(","); // Treat input as strings
+            processedArray = processArray(array, (str) => str.trim().toUpperCase()); // Convert to uppercase
+        }
+
+        document.getElementById("arrayResult").textContent = `Processed Array: ${processedArray}`;
+    }
+
+       
+    </script>
+</head>
+<body>
+    <h1>Callback Examples</h1>
+
+    <!-- Task 1: Greeting -->
+    <div>
+        <h2>Task 1: Greeting</h2>
+        <input type="text" id="greetInput" placeholder="Enter your name">
+        <button onclick="handleGreet()">Greet</button>
+        <p id="greetResult"></p>
+    </div>
+
+    <!-- Task 2: Math Operation -->
+    <div>
+        <h2>Task 2: Math Operation</h2>
+        <input type="number" id="num1" placeholder="Enter first number">
+        <input type="number" id="num2" placeholder="Enter second number">
+        <select id="operation">
+            <option value="add">Addition</option>
+            <option value="subtract">Subtraction</option>
+            <option value="multiply">Multiplication</option>
+            <option value="divide">Division</option>
+        </select>
+        <button onclick="handleCalculate()">Calculate</button>
+        <p id="calcResult"></p>
+    </div>
+
+    <!-- Task 3: Process Array -->
+    <div>
+        <h2>Task 3: Process Array</h2>
+        <input type="text" id="arrayInput" placeholder="Enter array (comma-separated)">
+        <select id="arrayOperation">
+            <option value="double">Double Number</option>
+            <option value="square"> Convert to Uppercase </option>
+        </select>
+        <button onclick="handleProcessArray()">Process Array</button>
+        <p id="arrayResult"></p>
+
+    </div>
+
+   
+</body>
+</html>
