@@ -30,13 +30,13 @@
     }
 
     button {
-      background-color: #007bff;
+      background-color: #a9b4c0;
       color: white;
       border: none;
     }
 
     button:hover {
-      background-color: #0056b3;
+      background-color: #b2d1f3;
     }
 
     img {
@@ -56,7 +56,7 @@
     }
 
     .highlight {
-      background-color: #ffff99;
+      background-color: #ccc2e9;
     }
 
     #colorBox {
@@ -89,9 +89,11 @@
     <img id="img" src="./OIP.jfif" alt="Old Alt Text">
     <button onclick="changeImageAlt()">Change Image Alt Text</button>
 
-    <button id="changeTextBtn" onclick="changeButtonText(this)">Click Me</button>
+    <button id="changeTextBtn" onclick="changeButtonText()">Click Me</button>
 
-    <p id="togglePara">This text will grow or shrink.</p>
+    <p id="togglePara">Computers are powerful machines that have revolutionized the way we work,<br>
+         communicate, and access information. They are capable of processing vast amounts of data at incredible speeds,<br>
+          making them indispensable tools in modern society. Click the button below to see how JavaScript can dynamically toggle the font size of this paragraph!</p>
     <button onclick="toggleFontSize()">Toggle Font Size</button>
 
     <p>Counter: <span id="counter">0</span></p>
@@ -99,14 +101,12 @@
 
     <button id="disableBtn" onclick="disableButton(this)">Click to Disable</button>
 
-    <input id="focusInput" onfocus="addFocus(this)" onblur="removeFocus(this)" placeholder="Focus me">
-
-    <input id="alertInput" placeholder="Type something">
+    <input id="alertInput" placeholder="Type something" onfocus="addFocus(this)" onblur="removeFocus(this)">
     <button onclick="alertInputValue()">Show Alert</button>
 
-    <button onclick="changeBackgroundColor('red')">Red</button>
-    <button onclick="changeBackgroundColor('green')">Green</button>
-    <button onclick="changeBackgroundColor('blue')">Blue</button>
+    <button onclick="changeBackgroundColor('#D5B1C3')">pink</button>
+    <button onclick="changeBackgroundColor('#E0CED7')">pink2</button>
+    <button onclick="changeBackgroundColor('#5F2240')">dark pink </button>
 
     <ul>
       <li onclick="highlightItem(this)">Item 1</li>
@@ -114,7 +114,7 @@
       <li onclick="highlightItem(this)">Item 3</li>
     </ul>
 
-    <input type="password" id="passwordField" placeholder="Password">
+    <input type="password" id="passwordField" placeholder="Enter Password">
     <label><input type="checkbox" onclick="togglePassword()"> Show Password</label>
 
     <input type="text" id="prefilled">
@@ -123,7 +123,7 @@
     <p id="upperOutput"></p>
 
     <input type="color" onchange="pickColor(this)">
-    <div id="colorBox"></div>
+    <div class="box" id="colorBox"></div>
 
     <div id="resetSection">
       <input type="text" value="Reset me">
@@ -137,21 +137,29 @@
     let fontSizeLarge = false;
     let count = 0;
 
+    let isOriginalTitle = true;
+
     function changePageTitle() {
-      document.title = 'We Love JavaScript';
+      if (isOriginalTitle) {
+        document.title = 'We Love JavaScript';
+      } else {
+        document.title = 'JavaScript DOM Manipulating Practice - II';
+      }
+      isOriginalTitle = !isOriginalTitle;
     }
 
     function changeImageAlt() {
-      let img = document.getElementById("img").alt;
-      document.getElementById('img').alt = img === 'computer image' ? 'Old Alt Text' : 'computer image';
+      let img = document.getElementById("img");
+      img.alt = img.alt === "Old Alt Text" ? "New Alt Text" : "Old Alt Text";
     }
 
-    function changeButtonText(button) {
-      button.textContent = 'Clicked!';
+    function changeButtonText() {
+      let button = document.getElementById("changeTextBtn");
+      button.textContent = button.textContent === "Click Me" ? "Clicked!" : "Click Me";
     }
 
     function toggleFontSize() {
-      const para = document.getElementById('togglePara');
+      let para = document.getElementById('togglePara');
       para.style.fontSize = fontSizeLarge ? '16px' : '24px';
       fontSizeLarge = !fontSizeLarge;
     }
@@ -173,7 +181,7 @@
     }
 
     function alertInputValue() {
-      const value = document.getElementById('alertInput').value;
+      let value = document.getElementById('alertInput').value;
       alert(value);
     }
 
@@ -186,20 +194,68 @@
     }
 
     function togglePassword() {
-      const pw = document.getElementById('passwordField');
+      let pw = document.getElementById('passwordField');
       pw.type = pw.type === 'password' ? 'text' : 'password';
     }
 
     function convertToUpper() {
-      const input = document.getElementById('uppercaseInput').value;
+      let input = document.getElementById('uppercaseInput').value;
       document.getElementById('upperOutput').textContent = input.toUpperCase();
     }
 
     function pickColor(input) {
       document.getElementById('colorBox').style.backgroundColor = input.value;
     }
-
     function resetContent() {
+      
+      document.title = 'JavaScript DOM Manipulating Practice - II';
+
+     
+      let img = document.getElementById("img");
+      img.alt = "Old Alt Text";
+
+     
+      let button = document.getElementById("changeTextBtn");
+      button.textContent = "Click Me";
+
+      
+      let para = document.getElementById('togglePara');
+      para.style.fontSize = '16px';
+
+      
+      count = 0;
+      document.getElementById('counter').textContent = count;
+
+      
+      let disableBtn = document.getElementById('disableBtn');
+      disableBtn.disabled = false;
+
+     
+      let focusedInputs = document.querySelectorAll('.focused');
+      focusedInputs.forEach(input => input.classList.remove('focused'));
+
+      
+      document.getElementById('alertInput').value = '';
+
+     
+      document.body.style.backgroundColor = '#f2f2f2';
+
+      
+      let highlightedItems = document.querySelectorAll('.highlight');
+      highlightedItems.forEach(item => item.classList.remove('highlight'));
+
+     
+      let pw = document.getElementById('passwordField');
+      pw.type = 'password';
+
+      
+      document.getElementById('uppercaseInput').value = '';
+      document.getElementById('upperOutput').textContent = '';
+
+      
+      document.getElementById('colorBox').style.backgroundColor = 'lightgray';
+
+      
       document.getElementById('resetSection').innerHTML = `
         <input type="text" value="Reset me">
         <p>Some content</p>
@@ -207,8 +263,9 @@
     }
 
     window.onload = () => {
-      document.getElementById('prefilled').value = 'Hello world!';
+      document.getElementById('prefilled').value = 'welcome to JavaScript! page'; 
     };
   </script>
 </body>
 </html>
+
