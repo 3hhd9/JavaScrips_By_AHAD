@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+</head>
+<body>
+
+    <!-- Heading Section -->
+    <div style="margin-bottom: 20px;">
+      <h1 id="mainHeading">I am Ahad Ali</h1>
+      <button onclick="changeHeading()">Change Heading</button>
+    </div>
+  
+    <!-- Change Font Section -->
+    <div style="margin-bottom: 20px;">
+      <h3 id="fontText">This text will change font style.</h3>
+      <button onclick="changeFont()">Change Font</button>
+    </div>
+  
+    <!-- Show/Hide Paragraph Section -->
+    <div style="margin-bottom: 20px;">
+      <p id="para">This is a paragraph that can be shown or hidden.</p>
+      <button onclick="toggleParagraph()">Toggle Paragraph</button>
+    </div>
+  
+    <!-- Add List Item Section -->
+    <div style="margin-bottom: 20px;">
+      <ul id="itemList">
+        <li>Item 1</li>
+      </ul>
+      <button onclick="addListItem()">Add List Item</button>
+    </div>
+  
+    <!-- Remove Element Section -->
+    <div style="margin-bottom: 20px;">
+      <div id="removeMe">This div will be removed.</div>
+      <button onclick="removeElement()">Remove Element</button>
+    </div>
+  
+    <script>
+      function changeHeading() {
+        document.getElementById("mainHeading").innerText = "Software Engineer";
+      }
+  
+      function changeFont() {
+        const text = document.getElementById("fontText");
+        text.style.fontFamily = "Courier New, Courier, monospace";
+        text.style.fontStyle = "italic";
+        text.style.color = "darkgreen";
+      }
+  
+      function toggleParagraph() {
+        const para = document.getElementById("para");
+        para.style.display = (para.style.display === "none") ? "block" : "none";
+      }
+  
+      function addListItem() {
+        const li = document.createElement("li");
+        li.innerText = "New Item";
+        document.getElementById("itemList").appendChild(li);
+      }
+  
+      function removeElement() {
+        const element = document.getElementById("removeMe");
+        if (element) {
+          element.remove();
+        } else {
+          console.log("Element not found.");
+        }
+      }
+    </script>
+  
+  </body>
+  
+
+</body>
+</html>
