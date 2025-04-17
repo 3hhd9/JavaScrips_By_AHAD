@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users, Posts, and Comments API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>API Interaction Page</h1>
+
+  <!-- Buttons -->
+  <button id="loadUsersBtn">Load Users</button>
+  <button id="loadPostsBtn">Load Posts</button>
+
+  <!-- Add New Post -->
+  <h2>Add a New Post</h2>
+  <form id="postForm">
+    <label>
+      Title:<br>
+      <input type="text" id="postTitle" required><br><br>
+    </label>
+    <label>
+      Body:<br>
+      <textarea id="postBody" rows="4" cols="50" required></textarea><br><br>
+    </label>
+    <button type="submit">Submit Post</button>
+  </form>
+  <div id="postResult" style="margin-top: 20px;"></div>
+
+  <!-- Load Comments Section -->
+  <h2>Load Comments by Post ID</h2>
+  <label for="postIdInput"><strong>Post ID:</strong></label>
+  <input type="number" id="postIdInput" placeholder="e.g. 1">
+  <button id="loadCommentsBtn">Load Comments</button>
+
+  <!-- Lists -->
+  <ul id="userList"></ul>
+  <ul id="postList"></ul>
+  <ul id="commentList"></ul>
+
+  <!-- JavaScript -->
+  <script>
+    const loadUsersBtn = document.getElementById('loadUsersBtn');
+    const loadPostsBtn = document.getElementById('loadPostsBtn');
+    const userList = document.getElementById('userList');
+    const postList = document.getElementById('postList');
+    const commentList = document.getElementById('commentList');
+    const loadCommentsBtn = document.getElementById('loadCommentsBtn');
+    const postIdInput = document.getElementById('postIdInput');
+
+    // Load Users
+    loadUsersBtn.addEventListener('click', () => {
+      fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(users => {
+          userList.innerHTML = '';
+          postList.innerHTML = '';
+          commentList.innerHTML = '';
+          users.forEach(user => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <strong>Name:</strong> ${user.name}<br>
+              <strong>Email:</strong> ${user.email}<br>
+              <strong>Company:</strong> ${user.company.name}
+            `;
+            userList.appendChild(li);
+          });
+        })
+        .catch(error => {
+          console.error('Failed to fetch users:', error);
+        });
+    });
+
+    // Load Posts
+    loadPostsBtn.addEventListener('click', () => {
+      fetch('https://jsonplaceholder.typicode.com/posts')
+        .then(response => response.json())
+        .then(posts => {
+          postList.innerHTML = '';
+          userList.innerHTML = '';
+          commentList.innerHTML = '';
+          posts.forEach(post => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <strong>Title:</strong> ${post.title}<br>
+              <strong>Body:</strong> ${post.body}
+            `;
+            postList.appendChild(li);
+          });
+        })
+        .catch(error => {
+          console.error('Failed to fetch posts:', error);
+        });
+    });
+
+    // Load Comments by Post ID
+    loadCommentsBtn.addEventListener('click', () => {
+      const postId = postIdInput.value.trim();
+      if (postId === '') {
+        alert('Please enter a Post ID');
+        return;
+      }
+
+      fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
+        .then(response => response.json())
+        .then(comments => {
+          commentList.innerHTML = '';
+          userList.innerHTML = '';
+          postList.innerHTML = '';
+
+          if (comments.length === 0) {
+            commentList.innerHTML = `<li>No comments found for Post ID ${postId}</li>`;
+          } else {
+            comments.forEach(comment => {
+              const li = document.createElement('li');
+              li.innerHTML = `
+                <strong>${comment.name}</strong><br>
+                ${comment.body}
+              `;
+              commentList.appendChild(li);
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Failed to fetch comments:', error);
+        });
+    });
+
+    // (Optional) Submit Post Logic - if you plan to use it
+    const postForm = document.getElementById('postForm');
+    const postResult = document.getElementById('postResult');
+
+    postForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = document.getElementById('postTitle').value;
+      const body = document.getElementById('postBody').value;
+
+      fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+          title,
+          body,
+          userId: 1, // you can make this dynamic later
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        postResult.innerHTML = `<strong>Post submitted!</strong><br>ID: ${data.id}<br>Title: ${data.title}`;
+        postForm.reset();
+      })
+      .catch(error => {
+        postResult.innerHTML = `<strong>Error submitting post.</strong>`;
+        console.error('Post submit error:', error);
+      });
+    });
+  </script>
+
+</body>
+</html>
